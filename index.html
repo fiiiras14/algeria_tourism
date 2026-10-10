@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -303,6 +303,7 @@ footer{background:#09150e;color:white;text-align:center;padding:35px}
         <button class="filter" data-filter="nord">Nord</button>
         <button class="filter" data-filter="est">Est</button>
         <button class="filter" data-filter="ouest">Ouest</button>
+        <button class="filter" data-filter="hauts">Hauts Plateaux</button>
         <button class="filter" data-filter="sahara">Sahara</button>
     </div>
 
@@ -502,6 +503,138 @@ const destinations = {
             ["Théâtre romain","Un théâtre antique remarquablement conservé."],
             ["Forum","Le centre politique et social de l'ancienne cité."],
             ["Ruines romaines","Explorez les rues et bâtiments de l'ancienne ville."]
+        ]
+    },
+
+    /* ---------- NOUVELLES DESTINATIONS ---------- */
+    tlemcen:{
+        name:"Tlemcen",region:"Ouest",category:"ouest",
+        search:"Tlemcen Algeria mosque Mansourah",
+        experience:"Art andalou & Histoire",
+        description:"Tlemcen, surnommée la perle du Maghreb, est une ville d'art et d'histoire aux influences andalouses. Mosquées anciennes, remparts, jardins et cascades en font l'une des plus belles cités de l'ouest algérien.",
+        coordinates:[34.8780,-1.3150],
+        places:[
+            ["Grande Mosquée de Tlemcen","L'un des plus anciens monuments religieux de la ville."],
+            ["Mansourah","Les vestiges impressionnants d'une ancienne cité fortifiée et son minaret."],
+            ["Le Mechouar","Une citadelle historique au cœur de la ville."],
+            ["Cascades d'El Ourit","Un site naturel pittoresque aux portes de Tlemcen."]
+        ]
+    },
+    jijel:{
+        name:"Jijel",region:"Est",category:"est",
+        search:"Jijel Algeria Corniche",
+        experience:"Mer & Forêts",
+        description:"Jijel est une côte sauvage où les montagnes boisées rencontrent la Méditerranée. Corniche spectaculaire, plages, grottes et parc national en font une destination idéale pour les amoureux de nature.",
+        coordinates:[36.8190,5.7667],
+        places:[
+            ["Corniche jijélienne","Une route côtière offrant des vues magnifiques sur la mer."],
+            ["Grottes Merveilleuses","Des grottes naturelles aux formations impressionnantes."],
+            ["Parc national de Taza","Un espace protégé mêlant forêts, falaises et littoral."],
+            ["Plages de Jijel","De belles plages bordées de collines vertes."]
+        ]
+    },
+    djemila:{
+        name:"Djémila",region:"Est",category:"est",
+        search:"Djemila Algeria Roman ruins",
+        experience:"Archéologie & Montagnes",
+        description:"Djémila est une cité romaine remarquablement préservée, installée dans un cadre montagneux. Son forum, ses temples et ses arcs en font l'un des sites archéologiques les plus beaux du pays.",
+        coordinates:[36.3200,5.7367],
+        places:[
+            ["Le Forum","La place centrale de l'ancienne cité romaine."],
+            ["Arc de Caracalla","Un arc monumental parmi les symboles du site."],
+            ["Temple de Septime Sévère","Un grand temple dédié à la dynastie des Sévères."],
+            ["Théâtre romain","Un théâtre antique dominant les ruines."]
+        ]
+    },
+    tebessa:{
+        name:"Tébessa",region:"Est",category:"est",
+        search:"Tebessa Algeria Roman temple Minerva",
+        experience:"Histoire romaine & Remparts",
+        description:"Tébessa, aux portes de la frontière tunisienne, conserve un riche patrimoine romain et byzantin. Ses remparts et ses temples racontent l'histoire d'une ville stratégique depuis l'Antiquité.",
+        coordinates:[35.4044,8.1242],
+        places:[
+            ["Temple de Minerve","Un temple romain bien conservé au centre-ville."],
+            ["Remparts byzantins","De puissantes murailles qui entourent la vieille ville."],
+            ["Arc de Caracalla","Une porte monumentale de l'époque romaine."],
+            ["Théâtre romain","Les vestiges d'un théâtre antique de la cité."]
+        ]
+    },
+    setif:{
+        name:"Sétif",region:"Hauts Plateaux",category:"hauts",
+        search:"Setif Algeria Ain El Fouara",
+        experience:"Ville & Patrimoine",
+        description:"Sétif est la grande ville des Hauts Plateaux, entre histoire antique et vie moderne. Sa célèbre fontaine, son musée de mosaïques et sa proximité avec Djémila en font une étape culturelle incontournable.",
+        coordinates:[36.1898,5.4108],
+        places:[
+            ["Fontaine Aïn El Fouara","Le monument le plus célèbre et le plus emblématique de la ville."],
+            ["Musée de Sétif","Une riche collection archéologique et de mosaïques romaines."],
+            ["Parc d'attractions","Un espace de loisirs apprécié des familles."],
+            ["Djémila à proximité","Un site romain classé à découvrir lors d'une excursion."]
+        ]
+    },
+    batna:{
+        name:"Batna",region:"Hauts Plateaux",category:"hauts",
+        search:"Batna Algeria Ghoufi",
+        experience:"Aurès & Nature",
+        description:"Batna est la porte des Aurès, une région de montagnes, de canyons et de forêts de cèdres. Entre gorges spectaculaires et monuments antiques, elle offre une grande variété de paysages.",
+        coordinates:[35.5559,6.1741],
+        places:[
+            ["Gorges de Ghoufi","Un canyon impressionnant parsemé de villages traditionnels."],
+            ["Parc national de Belezma","Un espace naturel connu pour ses forêts de cèdres."],
+            ["Tombeau de Medghassen","Un grand mausolée numide très ancien."],
+            ["Lambèse","Les ruines d'une importante cité romaine."]
+        ]
+    },
+    biskra:{
+        name:"Biskra",region:"Sahara",category:"sahara",
+        search:"Biskra Algeria oasis",
+        experience:"Oasis & Palmeraies",
+        description:"Biskra, surnommée la porte du Sahara, est une grande oasis réputée pour ses palmeraies et ses dattes. Jardins, sources chaudes et patrimoine ancien offrent un premier contact doux avec le désert.",
+        coordinates:[34.8500,5.7333],
+        places:[
+            ["Jardin Landon","Un jardin historique plein de végétation et de fraîcheur."],
+            ["Palmeraie de Biskra","Une immense oasis de palmiers-dattiers."],
+            ["Mosquée de Sidi Okba","Un lieu de culte ancien très vénéré de la région."],
+            ["Hammam Salhine","Des sources thermales naturelles connues depuis l'Antiquité."]
+        ]
+    },
+    eloued:{
+        name:"El Oued",region:"Sahara",category:"sahara",
+        search:"El Oued Algeria Souf dunes",
+        experience:"Dunes & Architecture",
+        description:"El Oued, la ville aux mille coupoles, est située au cœur du Souf, entre mer de dunes et palmeraies creusées dans le sable. Une architecture unique et des paysages grandioses vous y attendent.",
+        coordinates:[33.3683,6.8674],
+        places:[
+            ["Vieille ville aux coupoles","Une architecture traditionnelle faite de dômes et de voûtes."],
+            ["Grand Erg Oriental","Un immense océan de dunes à perte de vue."],
+            ["Palmeraies du Souf","Des palmiers plantés dans de grandes cuvettes creusées dans le sable."],
+            ["Marché traditionnel","Une immersion dans l'artisanat et la vie locale."]
+        ]
+    },
+    timimoun:{
+        name:"Timimoun",region:"Sahara",category:"sahara",
+        search:"Timimoun Algeria",
+        experience:"Oasis rouge & Désert",
+        description:"Timimoun, l'oasis rouge du Gourara, séduit par ses ksour couleur d'ocre, ses palmeraies et ses couchers de soleil. Un lieu calme et dépaysant, parfait pour découvrir le Sahara authentique.",
+        coordinates:[29.2639,0.2306],
+        places:[
+            ["Ksar de Timimoun","Une architecture en terre rouge typique du Gourara."],
+            ["Palmeraie","Une oasis verdoyante au milieu du désert."],
+            ["Sebkha de Timimoun","Une vaste dépression salée aux paysages étonnants."],
+            ["Dunes du Grand Erg Occidental","Un décor idéal pour admirer le coucher du soleil."]
+        ]
+    },
+    tamanrasset:{
+        name:"Tamanrasset",region:"Sahara",category:"sahara",
+        search:"Tamanrasset Algeria Hoggar Assekrem",
+        experience:"Montagnes & Grand Sud",
+        description:"Tamanrasset est la capitale du Hoggar, un massif volcanique aux paysages spectaculaires. Pics sombres, plateaux et lever de soleil à l'Assekrem en font une destination d'aventure inoubliable.",
+        coordinates:[22.7850,5.5228],
+        places:[
+            ["Assekrem","Un célèbre point de vue pour admirer le lever du soleil."],
+            ["Ermitage de Charles de Foucauld","Un lieu historique perché dans les montagnes."],
+            ["Parc national de l'Ahaggar","Un immense espace de reliefs volcaniques et de désert."],
+            ["Massif de l'Atakor","Un cœur montagneux aux formes spectaculaires."]
         ]
     }
 };
