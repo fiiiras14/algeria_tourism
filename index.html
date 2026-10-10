@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Algérie — Découvrez l'Algérie</title>
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 
 <style>
@@ -14,8 +15,9 @@ nav{position:fixed;top:0;left:0;width:100%;height:70px;background:rgba(8,25,16,.
 .logo span,footer span{color:#36d27b}
 nav a{color:white;text-decoration:none;margin-left:30px;font-weight:bold}
 nav a:hover{color:#36d27b}
+.nav-toggle{display:none;background:none;border:none;color:white;font-size:30px;cursor:pointer}
 
-/* HERO VIDEO */
+/* HERO CINÉMATOGRAPHIQUE — vidéo de l’Algérie, avec image de secours */
 .hero{position:relative;isolation:isolate;overflow:hidden;min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;color:white;padding:100px 20px 50px;background:linear-gradient(rgba(0,0,0,.58),rgba(0,0,0,.58)),url("https://upload.wikimedia.org/wikipedia/commons/b/b5/Casbah_of_Algiers.jpg");background-size:cover;background-position:center}
 .hero-video{position:absolute;inset:0;z-index:0;overflow:hidden;background:#07140d;pointer-events:none}
 .hero-video iframe{position:absolute;top:50%;left:50%;width:100vw;height:56.25vw;min-width:177.78vh;min-height:100vh;transform:translate(-50%,-50%);border:0;pointer-events:none}
@@ -78,7 +80,7 @@ section{padding:90px 7%}
 .no-results h3{font-size:24px;margin-bottom:10px}
 .no-results p{color:#68746d}
 
-/* COMPARISON */
+/* DESTINATION COMPARISON */
 .compare-section{margin-top:75px;padding:40px;background:#fff;border:1px solid #e1e9e3;border-radius:28px;box-shadow:0 12px 35px rgba(0,0,0,.06)}
 .compare-heading{text-align:center;margin-bottom:30px}
 .compare-heading .compare-icon{font-size:38px;margin-bottom:12px}
@@ -146,28 +148,44 @@ footer{background:#09150e;color:white;text-align:center;padding:35px}
 
 /* MOBILE */
 @media(max-width:800px){
- nav{padding:0 5%}
- nav div:last-child{display:none}
- section{padding:70px 5%}
- .detail-header{grid-template-columns:1fr}
- .detail-header img{height:300px}
- .info-row{grid-template-columns:1fr}
- .gallery{grid-template-columns:1fr}
- .gallery img{height:250px}
- .card-actions{flex-direction:column;align-items:stretch}
- .card-actions .btn,.card-actions .favorite-btn{width:100%;text-align:center}
- #algeriaMap{height:400px}
- .map-title h3{font-size:26px}
- .compare-section{padding:24px 16px;margin-top:50px}
- .compare-selectors,.compare-results{grid-template-columns:1fr}
- .compare-card img{height:230px}
- .compare-card-content{padding:18px}
- .compare-actions>*{width:100%;text-align:center}
+    nav{padding:0 5%}
+    .nav-toggle{display:block}
+    .nav-links{position:absolute;top:70px;left:0;width:100%;background:rgba(8,25,16,.97);display:none;flex-direction:column;padding:10px 5% 20px}
+    .nav-links.open{display:flex}
+    .nav-links a{margin:0;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+    section{padding:70px 5%}
+    .detail-header{grid-template-columns:1fr}
+    .detail-header img{height:300px}
+    .info-row{grid-template-columns:1fr}
+    .gallery{grid-template-columns:1fr}
+    .gallery img{height:250px}
+    .card-actions{flex-direction:column;align-items:stretch}
+    .card-actions .btn,.card-actions .favorite-btn{width:100%;text-align:center}
+    #algeriaMap{height:400px}
+    .map-title h3{font-size:26px}
+    .compare-section{padding:24px 16px;margin-top:50px}
+    .compare-selectors,.compare-results{grid-template-columns:1fr}
+    .compare-card img{height:230px}
+    .compare-card-content{padding:18px}
+    .compare-actions>*{width:100%;text-align:center}
 }
+
+/* ÉCRAN DE BIENVENUE */
+#welcomeScreen{position:fixed;inset:0;z-index:5000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:18px;padding:24px;text-align:center;color:#fff;background:radial-gradient(ellipse at center,rgba(15,69,39,.82),rgba(3,14,8,.98)),url("https://upload.wikimedia.org/wikipedia/commons/b/b5/Casbah_of_Algiers.jpg") center/cover;opacity:1;visibility:visible;transition:opacity .8s ease,visibility .8s ease}
+#welcomeScreen.is-leaving{opacity:0;visibility:hidden;pointer-events:none}
+#welcomeScreen .welcome-mark{font-size:clamp(54px,10vw,100px);line-height:1;color:#36d27b}
+#welcomeScreen h1{font-size:clamp(32px,7vw,68px);letter-spacing:.02em}
+#welcomeScreen p{font-size:clamp(17px,3vw,23px);color:rgba(255,255,255,.82)}
+@media(prefers-reduced-motion:reduce){#welcomeScreen{transition:none}}
 </style>
 </head>
 
 <body>
+<div id="welcomeScreen" role="status" aria-label="Bienvenue en Algérie">
+    <div class="welcome-mark" aria-hidden="true">✦</div>
+    <h1>Bienvenue en Algérie</h1>
+    <p>Une destination exceptionnelle vous attend</p>
+</div>
 
 
 <nav>
@@ -180,568 +198,678 @@ footer{background:#09150e;color:white;text-align:center;padding:35px}
  </div>
 </nav>
 
+
 <div id="homePage">
 <section class="hero" id="accueil">
- <div class="hero-video" aria-hidden="true">
-  <iframe
-   src="https://www.youtube-nocookie.com/embed/cU6rQF4mNEA?autoplay=1&mute=1&controls=0&loop=1&playlist=cU6rQF4mNEA&playsinline=1&rel=0&modestbranding=1"
-   title="Découvrir l’Algérie en vidéo"
-   loading="eager"
-   allow="autoplay; encrypted-media; picture-in-picture"
-   referrerpolicy="strict-origin-when-cross-origin"
-   tabindex="-1">
-  </iframe>
- </div>
-
- <div class="hero-content">
-  <h1>Découvrez <span>l'Algérie</span></h1>
-  <p>Des plages méditerranéennes aux immenses dunes du Sahara, explorez un pays riche en histoire, culture et paysages exceptionnels.</p>
-  <a href="#destinations" class="btn">Choisir ma destination ↓</a>
- </div>
+    <!-- La vidéo est ajoutée par JavaScript uniquement sur grand écran.
+         L'image Casbah reste le fond de secours (mobile, économie de données). -->
+    <div class="hero-video" aria-hidden="true"></div>
+    <div class="hero-content">
+        <h1>Découvrez <span>l'Algérie</span></h1>
+        <p>Des plages méditerranéennes aux immenses dunes du Sahara, explorez un pays riche en histoire, culture et paysages exceptionnels.</p>
+        <a href="#destinations" class="btn">Choisir ma destination ↓</a>
+    </div>
 </section>
 
 <section id="destinations">
- <div class="section-title">
-  <h2>Choisissez votre destination</h2>
-  <p>Explorez les plus belles régions d'Algérie.</p>
- </div>
+    <div class="section-title">
+        <h2>Choisissez votre destination</h2>
+        <p>Explorez les plus belles régions d'Algérie.</p>
+    </div>
 
- <div class="search-box">
-  <span class="search-icon">🔍</span>
-  <input type="text" id="destinationSearch" placeholder="Rechercher une destination..." autocomplete="off">
- </div>
+    <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="destinationSearch" placeholder="Rechercher une destination..." autocomplete="off">
+    </div>
 
- <div class="filters">
-  <button class="filter active" data-filter="all">Toutes</button>
-  <button class="filter" data-filter="nord">Nord</button>
-  <button class="filter" data-filter="est">Est</button>
-  <button class="filter" data-filter="ouest">Ouest</button>
-  <button class="filter" data-filter="sahara">Sahara</button>
- </div>
+    <div class="filters">
+        <button class="filter active" data-filter="all">Toutes</button>
+        <button class="filter" data-filter="nord">Nord</button>
+        <button class="filter" data-filter="est">Est</button>
+        <button class="filter" data-filter="ouest">Ouest</button>
+        <button class="filter" data-filter="sahara">Sahara</button>
+    </div>
 
- <div class="map-section">
-  <div class="map-title">
-   <h3>🗺️ Explorez l'Algérie sur la carte</h3>
-   <p>Cliquez sur une destination pour découvrir la région.</p>
-  </div>
-  <div class="map-container"><div id="algeriaMap"></div></div>
- </div>
+    <div class="map-section">
+        <div class="map-title">
+            <h3>🗺️ Explorez l'Algérie sur la carte</h3>
+            <p>Cliquez sur une destination pour découvrir la région.</p>
+        </div>
+        <div class="map-container">
+            <div id="algeriaMap"></div>
+        </div>
+    </div>
 
- <div class="destinations-grid" id="destinationsGrid"></div>
+    <div class="destinations-grid" id="destinationsGrid"></div>
 
- <div class="compare-section" id="compareSection">
-  <div class="compare-heading">
-   <div class="compare-icon">⚖️</div>
-   <h2>Comparez les <span>destinations</span></h2>
-   <p>Choisissez deux destinations et comparez leurs régions, leurs expériences et les lieux à découvrir.</p>
-  </div>
+    <!-- COMPARER LES DESTINATIONS -->
+    <div class="compare-section" id="compareSection">
+        <div class="compare-heading">
+            <div class="compare-icon">⚖️</div>
+            <h2>Comparez les <span>destinations</span></h2>
+            <p>Choisissez deux destinations et comparez leurs régions, leurs expériences et les lieux à découvrir.</p>
+        </div>
 
-  <div class="compare-selectors">
-   <div class="compare-select-group">
-    <label for="compareFirst">📍 Première destination</label>
-    <select id="compareFirst"></select>
-   </div>
-   <div class="compare-select-group">
-    <label for="compareSecond">📍 Deuxième destination</label>
-    <select id="compareSecond"></select>
-   </div>
-  </div>
+        <div class="compare-selectors">
+            <div class="compare-select-group">
+                <label for="compareFirst">📍 Première destination</label>
+                <select id="compareFirst"></select>
+            </div>
+            <div class="compare-select-group">
+                <label for="compareSecond">📍 Deuxième destination</label>
+                <select id="compareSecond"></select>
+            </div>
+        </div>
 
-  <div class="compare-actions">
-   <button class="btn" type="button" onclick="renderComparison()">Comparer maintenant →</button>
-   <button class="compare-secondary" type="button" onclick="swapComparison()">⇄ Inverser les destinations</button>
-   <button class="compare-secondary" type="button" onclick="resetComparison()">Réinitialiser</button>
-  </div>
+        <div class="compare-actions">
+            <button class="btn" type="button" onclick="renderComparison()">Comparer maintenant →</button>
+            <button class="compare-secondary" type="button" onclick="swapComparison()">⇄ Inverser les destinations</button>
+            <button class="compare-secondary" type="button" onclick="resetComparison()">Réinitialiser</button>
+        </div>
 
-  <div id="compareMessage" class="compare-message" aria-live="polite">Choisissez deux destinations pour commencer la comparaison.</div>
-  <div id="compareResults" class="compare-results"></div>
-  <div id="compareSummary"></div>
- </div>
+        <div id="compareMessage" class="compare-message" aria-live="polite">
+            Choisissez deux destinations pour commencer la comparaison.
+        </div>
+        <div id="compareResults" class="compare-results"></div>
+        <div id="compareSummary"></div>
+    </div>
 </section>
 </div>
 
 <section id="destinationDetail">
- <button class="back-btn" onclick="goBack()">← Retour aux destinations</button>
+    <button class="back-btn" onclick="goBack()">← Retour aux destinations</button>
+    <div class="detail-header">
+        <div class="detail-info">
+            <div class="region" id="detailRegion"></div>
+            <h1 id="detailTitle"></h1>
+            <p id="detailDescription"></p>
+            <div class="info-row">
+                <div class="info-box"><strong>📍 Région</strong><span id="detailRegionBox"></span></div>
+                <div class="info-box"><strong>🌤️ Expérience</strong><span id="detailExperience"></span></div>
+                <div class="info-box"><strong>⭐ Lieux</strong><span id="detailPlacesCount"></span></div>
+            </div>
+        </div>
+        <img id="detailHeroImage" src="" alt="">
+    </div>
 
- <div class="detail-header">
-  <div class="detail-info">
-   <div class="region" id="detailRegion"></div>
-   <h1 id="detailTitle"></h1>
-   <p id="detailDescription"></p>
-
-   <div class="info-row">
-    <div class="info-box"><strong>📍 Région</strong><span id="detailRegionBox"></span></div>
-    <div class="info-box"><strong>🌤️ Expérience</strong><span id="detailExperience"></span></div>
-    <div class="info-box"><strong>⭐ Lieux</strong><span id="detailPlacesCount"></span></div>
-   </div>
-  </div>
-  <img id="detailHeroImage" src="" alt="">
- </div>
-
- <h2 class="gallery-title">📸 Galerie photos</h2>
- <div class="gallery" id="detailGallery"></div>
- <h2 class="places-title">📍 Les endroits à découvrir</h2>
- <div class="places-grid" id="detailPlaces"></div>
+    <h2 class="gallery-title">📸 Galerie photos</h2>
+    <div class="gallery" id="detailGallery"></div>
+    <h2 class="places-title">📍 Les endroits à découvrir</h2>
+    <div class="places-grid" id="detailPlaces"></div>
 </section>
 
 <div class="lightbox" id="lightbox">
- <span class="close" onclick="closeLightbox()">×</span>
- <img id="lightboxImage" src="" alt="">
+    <span class="close" onclick="closeLightbox()">×</span>
+    <img id="lightboxImage" src="" alt="">
 </div>
 
 <footer>© 2026 <span>Algérie.</span> Découvrez la beauté de notre pays 🇩🇿</footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-/* DESTINATIONS */
+/* =====================================================
+   DESTINATIONS
+===================================================== */
 const destinations = {
- alger:{
-  name:"Alger",region:"Nord",category:"nord",
-  search:"Algiers Algeria Casbah",
-  experience:"Histoire & Méditerranée",
-  description:"Alger, la capitale de l'Algérie, mélange histoire, architecture méditerranéenne et vie moderne. Découvrez la Casbah, les grandes places, le front de mer et les jardins de la capitale.",
-  coordinates:[36.7538,3.0588],
-  places:[
-   ["La Casbah","Un quartier historique emblématique d'Alger."],
-   ["Jardin d'Essai","Un magnifique jardin botanique au cœur de la capitale."],
-   ["Front de mer","Une promenade avec une vue magnifique sur la Méditerranée."],
-   ["Grande Mosquée d'Alger","Un monument moderne impressionnant au bord de la mer."]
-  ]
- },
- tipaza:{
-  name:"Tipaza",region:"Nord",category:"nord",
-  search:"Tipaza Algeria Roman ruins",
-  experience:"Mer & Histoire",
-  description:"Tipaza est célèbre pour ses ruines romaines installées face à la Méditerranée. Une destination parfaite pour combiner histoire, mer et paysages.",
-  coordinates:[36.5890,2.4488],
-  places:[
-   ["Ruines de Tipaza","Les vestiges d'une ancienne ville romaine."],
-   ["Parc archéologique","Un espace historique entouré de nature."],
-   ["Mont Chenoua","Une montagne spectaculaire dominant la région."],
-   ["Côte de Tipaza","De magnifiques paysages méditerranéens."]
-  ]
- },
- bejaia:{
-  name:"Béjaïa",region:"Est",category:"est",
-  search:"Bejaia Algeria Cap Carbon Gouraya",
-  experience:"Nature & Montagnes",
-  description:"Béjaïa est une ville côtière entourée de montagnes. Entre mer, forêts et patrimoine historique, elle offre des paysages exceptionnels.",
-  coordinates:[36.7509,5.0567],
-  places:[
-   ["Cap Carbon","Un magnifique point de vue dominant la Méditerranée."],
-   ["Yemma Gouraya","Une montagne emblématique de Béjaïa."],
-   ["Parc de Gouraya","Un espace naturel riche en paysages."],
-   ["Les plages","Des plages entourées de montagnes et de nature."]
-  ]
- },
- constantine:{
-  name:"Constantine",region:"Est",category:"est",
-  search:"Constantine Algeria bridges",
-  experience:"Architecture & Histoire",
-  description:"Constantine, surnommée la ville des ponts suspendus, est construite autour de profondes gorges qui lui donnent un paysage absolument unique.",
-  coordinates:[36.3650,6.6147],
-  places:[
-   ["Pont Sidi M'Cid","Un pont spectaculaire au-dessus des gorges."],
-   ["Pont Sidi Rached","Un monument emblématique de Constantine."],
-   ["Vieille ville","Des ruelles et une architecture historique."],
-   ["Gorges du Rhumel","Des falaises impressionnantes entourant la ville."]
-  ]
- },
- annaba:{
-  name:"Annaba",region:"Est",category:"est",
-  search:"Annaba Algeria city beach",
-  experience:"Plages & Culture",
-  description:"Annaba est une grande ville méditerranéenne connue pour ses plages, ses paysages et son patrimoine historique.",
-  coordinates:[36.9000,7.7667],
-  places:[
-   ["Basilique Saint-Augustin","Un monument historique dominant la ville."],
-   ["Cap de Garde","Un magnifique endroit pour admirer la mer."],
-   ["Seraïdi","Une région montagneuse aux paysages magnifiques."],
-   ["Plages d'Annaba","Des plages idéales pour profiter de la Méditerranée."]
-  ]
- },
- oran:{
-  name:"Oran",region:"Ouest",category:"ouest",
-  search:"Oran Algeria Santa Cruz",
-  experience:"Ville & Méditerranée",
-  description:"Oran est l'une des plus grandes villes d'Algérie. Dynamique et méditerranéenne, elle est célèbre pour son patrimoine et son ambiance unique.",
-  coordinates:[35.6971,-0.6308],
-  places:[
-   ["Fort Santa Cruz","Un fort historique dominant la baie d'Oran."],
-   ["Front de mer","Une promenade avec une vue magnifique."],
-   ["Centre-ville","Découvrez l'architecture et l'ambiance d'Oran."],
-   ["Mont Murdjadjo","Un point culminant offrant une vue spectaculaire."]
-  ]
- },
- ghardaia:{
-  name:"Ghardaïa",region:"Sahara",category:"sahara",
-  search:"Ghardaia Algeria Mzab",
-  experience:"Culture & Sahara",
-  description:"Ghardaïa est l'une des destinations les plus fascinantes du Sahara algérien. Son architecture traditionnelle et ses paysages sont uniques.",
-  coordinates:[32.4909,3.6735],
-  places:[
-   ["Vallée du M'Zab","Un ensemble architectural et culturel exceptionnel."],
-   ["Vieille ville","Des ruelles et maisons traditionnelles."],
-   ["Beni Isguen","Une cité historique connue pour ses traditions."],
-   ["Marchés traditionnels","Une immersion dans l'artisanat local."]
-  ]
- },
- djanet:{
-  name:"Djanet",region:"Sahara",category:"sahara",
-  search:"Djanet Algeria Tassili n Ajjer",
-  experience:"Désert & Aventure",
-  description:"Djanet est une porte d'entrée vers les paysages extraordinaires du Tassili n'Ajjer. Entre dunes, rochers et peintures rupestres, c'est une destination exceptionnelle.",
-  coordinates:[24.5550,9.4840],
-  places:[
-   ["Tassili n'Ajjer","Un immense paysage rocheux mondialement connu."],
-   ["Tadrart Rouge","Des formations rocheuses et des dunes magnifiques."],
-   ["Peintures rupestres","Des traces exceptionnelles des anciennes civilisations."],
-   ["Désert de Djanet","Une expérience unique au cœur du Sahara."]
-  ]
- },
- timgad:{
-  name:"Timgad",region:"Est",category:"est",
-  search:"Timgad Algeria Roman ruins",
-  experience:"Archéologie & Histoire",
-  description:"Timgad est une ancienne cité romaine parfaitement organisée selon un plan en damier. Ses ruines constituent un site archéologique exceptionnel.",
-  coordinates:[35.4847,6.4678],
-  places:[
-   ["Arc de Trajan","L'un des monuments les plus célèbres du site."],
-   ["Théâtre romain","Un théâtre antique remarquablement conservé."],
-   ["Forum","Le centre politique et social de l'ancienne cité."],
-   ["Ruines romaines","Explorez les rues et bâtiments de l'ancienne ville."]
-  ]
- }
+    alger:{
+        name:"Alger",region:"Nord",category:"nord",
+        search:"Algiers Algeria Casbah",
+        experience:"Histoire & Méditerranée",
+        description:"Alger, la capitale de l'Algérie, mélange histoire, architecture méditerranéenne et vie moderne. Découvrez la Casbah, les grandes places, le front de mer et les jardins de la capitale.",
+        coordinates:[36.7538,3.0588],
+        places:[
+            ["La Casbah","Un quartier historique emblématique d'Alger."],
+            ["Jardin d'Essai","Un magnifique jardin botanique au cœur de la capitale."],
+            ["Front de mer","Une promenade avec une vue magnifique sur la Méditerranée."],
+            ["Grande Mosquée d'Alger","Un monument moderne impressionnant au bord de la mer."]
+        ]
+    },
+    tipaza:{
+        name:"Tipaza",region:"Nord",category:"nord",
+        search:"Tipaza Algeria Roman ruins",
+        experience:"Mer & Histoire",
+        description:"Tipaza est célèbre pour ses ruines romaines installées face à la Méditerranée. Une destination parfaite pour combiner histoire, mer et paysages.",
+        coordinates:[36.5890,2.4488],
+        places:[
+            ["Ruines de Tipaza","Les vestiges d'une ancienne ville romaine."],
+            ["Parc archéologique","Un espace historique entouré de nature."],
+            ["Mont Chenoua","Une montagne spectaculaire dominant la région."],
+            ["Côte de Tipaza","De magnifiques paysages méditerranéens."]
+        ]
+    },
+    bejaia:{
+        name:"Béjaïa",region:"Est",category:"est",
+        search:"Bejaia Algeria Cap Carbon Gouraya",
+        experience:"Nature & Montagnes",
+        description:"Béjaïa est une ville côtière entourée de montagnes. Entre mer, forêts et patrimoine historique, elle offre des paysages exceptionnels.",
+        coordinates:[36.7509,5.0567],
+        places:[
+            ["Cap Carbon","Un magnifique point de vue dominant la Méditerranée."],
+            ["Yemma Gouraya","Une montagne emblématique de Béjaïa."],
+            ["Parc de Gouraya","Un espace naturel riche en paysages."],
+            ["Les plages","Des plages entourées de montagnes et de nature."]
+        ]
+    },
+    constantine:{
+        name:"Constantine",region:"Est",category:"est",
+        search:"Constantine Algeria bridges",
+        experience:"Architecture & Histoire",
+        description:"Constantine, surnommée la ville des ponts suspendus, est construite autour de profondes gorges qui lui donnent un paysage absolument unique.",
+        coordinates:[36.3650,6.6147],
+        places:[
+            ["Pont Sidi M'Cid","Un pont spectaculaire au-dessus des gorges."],
+            ["Pont Sidi Rached","Un monument emblématique de Constantine."],
+            ["Vieille ville","Des ruelles et une architecture historique."],
+            ["Gorges du Rhumel","Des falaises impressionnantes entourant la ville."]
+        ]
+    },
+    annaba:{
+        name:"Annaba",region:"Est",category:"est",
+        search:"Annaba Algeria city beach",
+        experience:"Plages & Culture",
+        description:"Annaba est une grande ville méditerranéenne connue pour ses plages, ses paysages et son patrimoine historique.",
+        coordinates:[36.9000,7.7667],
+        places:[
+            ["Basilique Saint-Augustin","Un monument historique dominant la ville."],
+            ["Cap de Garde","Un magnifique endroit pour admirer la mer."],
+            ["Seraïdi","Une région montagneuse aux paysages magnifiques."],
+            ["Plages d'Annaba","Des plages idéales pour profiter de la Méditerranée."]
+        ]
+    },
+    oran:{
+        name:"Oran",region:"Ouest",category:"ouest",
+        search:"Oran Algeria Santa Cruz",
+        experience:"Ville & Méditerranée",
+        description:"Oran est l'une des plus grandes villes d'Algérie. Dynamique et méditerranéenne, elle est célèbre pour son patrimoine et son ambiance unique.",
+        coordinates:[35.6971,-0.6308],
+        places:[
+            ["Fort Santa Cruz","Un fort historique dominant la baie d'Oran."],
+            ["Front de mer","Une promenade avec une vue magnifique."],
+            ["Centre-ville","Découvrez l'architecture et l'ambiance d'Oran."],
+            ["Mont Murdjadjo","Un point culminant offrant une vue spectaculaire."]
+        ]
+    },
+    ghardaia:{
+        name:"Ghardaïa",region:"Sahara",category:"sahara",
+        search:"Ghardaia Algeria Mzab",
+        experience:"Culture & Sahara",
+        description:"Ghardaïa est l'une des destinations les plus fascinantes du Sahara algérien. Son architecture traditionnelle et ses paysages sont uniques.",
+        coordinates:[32.4909,3.6735],
+        places:[
+            ["Vallée du M'Zab","Un ensemble architectural et culturel exceptionnel."],
+            ["Vieille ville","Des ruelles et maisons traditionnelles."],
+            ["Beni Isguen","Une cité historique connue pour ses traditions."],
+            ["Marchés traditionnels","Une immersion dans l'artisanat local."]
+        ]
+    },
+    djanet:{
+        name:"Djanet",region:"Sahara",category:"sahara",
+        search:"Djanet Algeria Tassili n Ajjer",
+        experience:"Désert & Aventure",
+        description:"Djanet est une porte d'entrée vers les paysages extraordinaires du Tassili n'Ajjer. Entre dunes, rochers et peintures rupestres, c'est une destination exceptionnelle.",
+        coordinates:[24.5550,9.4840],
+        places:[
+            ["Tassili n'Ajjer","Un immense paysage rocheux mondialement connu."],
+            ["Tadrart Rouge","Des formations rocheuses et des dunes magnifiques."],
+            ["Peintures rupestres","Des traces exceptionnelles des anciennes civilisations."],
+            ["Désert de Djanet","Une expérience unique au cœur du Sahara."]
+        ]
+    },
+    timgad:{
+        name:"Timgad",region:"Est",category:"est",
+        search:"Timgad Algeria Roman ruins",
+        experience:"Archéologie & Histoire",
+        description:"Timgad est une ancienne cité romaine parfaitement organisée selon un plan en damier. Ses ruines constituent un site archéologique exceptionnel.",
+        coordinates:[35.4847,6.4678],
+        places:[
+            ["Arc de Trajan","L'un des monuments les plus célèbres du site."],
+            ["Théâtre romain","Un théâtre antique remarquablement conservé."],
+            ["Forum","Le centre politique et social de l'ancienne cité."],
+            ["Ruines romaines","Explorez les rues et bâtiments de l'ancienne ville."]
+        ]
+    }
 };
 
-/* FAVORITES */
+/* =====================================================
+   FAVORIS
+===================================================== */
 const FAVORITES_KEY="algerieFavorites";
 
 function getFavorites(){
- try{return JSON.parse(localStorage.getItem(FAVORITES_KEY))||[]}
- catch(error){return []}
+    try{return JSON.parse(localStorage.getItem(FAVORITES_KEY))||[]}
+    catch(error){return []}
 }
 
 function isFavorite(id){return getFavorites().includes(id)}
 
 function toggleFavorite(id){
- let favorites=getFavorites();
- if(favorites.includes(id))favorites=favorites.filter(favoriteId=>favoriteId!==id);
- else favorites.push(id);
- localStorage.setItem(FAVORITES_KEY,JSON.stringify(favorites));
- updateFavoriteButton(id);
+    let favorites=getFavorites();
+    if(favorites.includes(id))favorites=favorites.filter(favoriteId=>favoriteId!==id);
+    else favorites.push(id);
+    try{localStorage.setItem(FAVORITES_KEY,JSON.stringify(favorites))}catch(error){}
+    updateFavoriteButton(id);
 }
 
 function updateFavoriteButton(id){
- const button=document.querySelector(`.favorite-btn[data-id="${id}"]`);
- if(!button)return;
- if(isFavorite(id)){
-  button.classList.add("active");
-  button.innerHTML="♥ Favori";
- }else{
-  button.classList.remove("active");
-  button.innerHTML="♡ Ajouter aux favoris";
- }
+    const button=document.querySelector(`.favorite-btn[data-id="${id}"]`);
+    if(!button)return;
+    if(isFavorite(id)){
+        button.classList.add("active");
+        button.innerHTML="♥ Favori";
+    }else{
+        button.classList.remove("active");
+        button.innerHTML="♡ Ajouter aux favoris";
+    }
 }
 
-/* IMAGE CACHE */
+/* =====================================================
+   IMAGES
+===================================================== */
 const imageCache={};
 
 async function getImages(search){
- if(imageCache[search])return imageCache[search];
- try{
-  const url="https://commons.wikimedia.org/w/api.php"+
-   "?action=query&generator=search&gsrnamespace=6&gsrlimit=8&gsrsearch="+
-   encodeURIComponent(search)+
-   "&prop=imageinfo&iiprop=url&iiurlwidth=1200&format=json&origin=*";
-  const response=await fetch(url);
-  const data=await response.json();
-  if(!data.query||!data.query.pages)return [];
-  const images=Object.values(data.query.pages).map(page=>{
-   if(page.imageinfo&&page.imageinfo[0])
-    return page.imageinfo[0].thumburl||page.imageinfo[0].url;
-   return null;
-  }).filter(Boolean);
-  imageCache[search]=images;
-  return images;
- }catch(error){
-  console.error("Erreur Wikimedia:",error);
-  return [];
- }
+    if(imageCache[search])return imageCache[search];
+    try{
+        const url="https://commons.wikimedia.org/w/api.php"+
+        "?action=query&generator=search&gsrnamespace=6&gsrlimit=8&gsrsearch="+
+        encodeURIComponent(search)+
+        "&prop=imageinfo&iiprop=url&iiurlwidth=1200&format=json&origin=*";
+        const response=await fetch(url);
+        const data=await response.json();
+        if(!data.query||!data.query.pages)return [];
+        const images=Object.values(data.query.pages).map(page=>{
+            if(page.imageinfo&&page.imageinfo[0])
+                return page.imageinfo[0].thumburl||page.imageinfo[0].url;
+            return null;
+        }).filter(Boolean);
+        imageCache[search]=images;
+        return images;
+    }catch(error){
+        console.error("Erreur Wikimedia:",error);
+        return [];
+    }
 }
 
 function placeholder(name){
- return "https://placehold.co/1200x800/dfe8e2/17221c?text="+encodeURIComponent(name);
+    return "https://placehold.co/1200x800/dfe8e2/17221c?text="+encodeURIComponent(name);
 }
 
-/* INTERACTIVE MAP */
+/* FIX 4 : image de secours si une image échoue (couvre toutes les <img>) */
+document.addEventListener("error",e=>{
+    const img=e.target;
+    if(img.tagName==="IMG"&&!img.dataset.failed){
+        img.dataset.failed="1"; // évite une boucle infinie
+        img.src=placeholder(img.alt||"Algérie");
+    }
+},true); // true : l'événement error ne remonte pas (pas de bubbling)
+
+/* =====================================================
+   CARTE INTERACTIVE
+===================================================== */
 const map=L.map("algeriaMap",{scrollWheelZoom:false}).setView([28,2],5);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
- maxZoom:19,
- attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    maxZoom:19,
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
 const mapMarkers={};
 
 Object.entries(destinations).forEach(([id,destination])=>{
- const marker=L.marker(destination.coordinates).addTo(map);
- marker.bindPopup(`
-  <div class="map-popup">
-   <div class="map-popup-region">${destination.region}</div>
-   <h3>${destination.name}</h3>
-   <p>${destination.experience}</p>
-   <button class="map-popup-btn" onclick="openDestination('${id}')">Découvrir →</button>
-  </div>
- `);
- mapMarkers[id]=marker;
+    const marker=L.marker(destination.coordinates).addTo(map);
+    marker.bindPopup(`
+        <div class="map-popup">
+            <div class="map-popup-region">${destination.region}</div>
+            <h3>${destination.name}</h3>
+            <p>${destination.experience}</p>
+            <button class="map-popup-btn" onclick="openDestination('${id}')">Découvrir →</button>
+        </div>
+    `);
+    mapMarkers[id]=marker;
 });
 
 function focusDestinationOnMap(id){
- const destination=destinations[id];
- if(!destination)return;
- map.setView(destination.coordinates,10,{animate:true});
- mapMarkers[id].openPopup();
+    const destination=destinations[id];
+    if(!destination)return;
+    map.setView(destination.coordinates,10,{animate:true});
+    mapMarkers[id].openPopup();
 }
 
-/* DISPLAY DESTINATION CARDS */
+/* =====================================================
+   AFFICHAGE DES CARTES — FIX 1 : images en parallèle
+===================================================== */
 let currentFilter="all";
+let displayRequest=0;
 
 async function displayDestinations(filter="all",search=""){
- const grid=document.getElementById("destinationsGrid");
- grid.innerHTML='<div class="loading">Chargement des destinations...</div>';
- const searchText=search.trim().toLowerCase();
+    const grid=document.getElementById("destinationsGrid");
+    const requestId=++displayRequest;
+    grid.innerHTML='<div class="loading">Chargement des destinations...</div>';
 
- const entries=Object.entries(destinations).filter(([id,destination])=>{
-  const matchesFilter=filter==="all"||destination.category===filter;
-  const matchesSearch=searchText===""||
-   destination.name.toLowerCase().includes(searchText)||
-   destination.region.toLowerCase().includes(searchText)||
-   destination.experience.toLowerCase().includes(searchText)||
-   destination.description.toLowerCase().includes(searchText);
-  return matchesFilter&&matchesSearch;
- });
+    const searchText=search.trim().toLowerCase();
+    const entries=Object.entries(destinations).filter(([id,d])=>{
+        const matchesFilter=filter==="all"||d.category===filter;
+        const matchesSearch=searchText===""||
+            d.name.toLowerCase().includes(searchText)||
+            d.region.toLowerCase().includes(searchText)||
+            d.experience.toLowerCase().includes(searchText)||
+            d.description.toLowerCase().includes(searchText);
+        return matchesFilter&&matchesSearch;
+    });
 
- grid.innerHTML="";
+    if(entries.length===0){
+        grid.innerHTML='<div class="no-results"><h3>Aucune destination trouvée 😕</h3><p>Essayez une autre recherche.</p></div>';
+        return;
+    }
 
- if(entries.length===0){
-  grid.innerHTML='<div class="no-results"><h3>Aucune destination trouvée 😕</h3><p>Essayez une autre recherche.</p></div>';
-  return;
- }
+    // Toutes les images sont chargées en même temps
+    const allImages=await Promise.all(entries.map(([id,d])=>getImages(d.search)));
+    if(requestId!==displayRequest)return; // requête plus ancienne : on l'ignore
 
- for(const [id,destination] of entries){
-  const card=document.createElement("div");
-  card.className="destination-card";
-  const images=await getImages(destination.search);
-  const firstImage=images[0]||placeholder(destination.name);
-  const favoriteActive=isFavorite(id);
-
-  card.innerHTML=`
-   <img class="card-image" src="${firstImage}" alt="${destination.name}" loading="lazy">
-   <div class="card-content">
-    <div class="region">${destination.region}</div>
-    <h3>${destination.name}</h3>
-    <p>${destination.description.substring(0,145)}...</p>
-    <div class="card-actions">
-     <button class="btn" onclick="openDestination('${id}')">Découvrir →</button>
-     <button class="favorite-btn ${favoriteActive?"active":""}" data-id="${id}" onclick="toggleFavorite('${id}')">
-      ${favoriteActive?"♥ Favori":"♡ Ajouter aux favoris"}
-     </button>
-    </div>
-   </div>`;
-  grid.appendChild(card);
- }
+    const fragment=document.createDocumentFragment();
+    entries.forEach(([id,destination],i)=>{
+        const firstImage=allImages[i][0]||placeholder(destination.name);
+        const fav=isFavorite(id);
+        const card=document.createElement("div");
+        card.className="destination-card";
+        card.innerHTML=`
+            <img class="card-image" src="${firstImage}" alt="${destination.name}" loading="lazy">
+            <div class="card-content">
+                <div class="region">${destination.region}</div>
+                <h3>${destination.name}</h3>
+                <p>${destination.description.substring(0,145)}...</p>
+                <div class="card-actions">
+                    <button class="btn" onclick="openDestination('${id}')">Découvrir →</button>
+                    <button class="favorite-btn ${fav?"active":""}" data-id="${id}" onclick="toggleFavorite('${id}')">
+                        ${fav?"♥ Favori":"♡ Ajouter aux favoris"}
+                    </button>
+                </div>
+            </div>`;
+        fragment.appendChild(card);
+    });
+    grid.innerHTML="";
+    grid.appendChild(fragment);
 }
 
-/* FILTERS */
+/* FILTRES */
 document.querySelectorAll(".filter").forEach(button=>{
- button.addEventListener("click",()=>{
-  document.querySelectorAll(".filter").forEach(btn=>btn.classList.remove("active"));
-  button.classList.add("active");
-  currentFilter=button.dataset.filter;
-  displayDestinations(currentFilter,document.getElementById("destinationSearch").value);
- });
+    button.addEventListener("click",()=>{
+        document.querySelectorAll(".filter").forEach(btn=>btn.classList.remove("active"));
+        button.classList.add("active");
+        currentFilter=button.dataset.filter;
+        displayDestinations(currentFilter,document.getElementById("destinationSearch").value);
+    });
 });
 
-/* SEARCH */
+/* RECHERCHE (avec debounce) */
+let searchTimer;
 document.getElementById("destinationSearch").addEventListener("input",function(){
- displayDestinations(currentFilter,this.value);
+    clearTimeout(searchTimer);
+    searchTimer=setTimeout(()=>displayDestinations(currentFilter,this.value),250);
 });
 
-/* COMPARISON */
+/* =====================================================
+   COMPARAISON DES DESTINATIONS
+===================================================== */
 const compareFirst=document.getElementById("compareFirst");
 const compareSecond=document.getElementById("compareSecond");
 let comparisonRequest=0;
 
 function populateComparisonSelectors(){
- const options=Object.entries(destinations).map(([id,destination])=>
-  `<option value="${id}">${destination.name}</option>`
- ).join("");
- compareFirst.innerHTML=options;
- compareSecond.innerHTML=options;
- compareFirst.value="alger";
- compareSecond.value="bejaia";
+    const options=Object.entries(destinations).map(([id,destination])=>
+        `<option value="${id}">${destination.name}</option>`
+    ).join("");
+    compareFirst.innerHTML=options;
+    compareSecond.innerHTML=options;
+    compareFirst.value="alger";
+    compareSecond.value="bejaia";
 }
 
 function buildCompareCard(id,images){
- const destination=destinations[id];
- const image=images[0]||placeholder(destination.name);
- const places=destination.places.map(place=>
-  `<li><strong>${place[0]}</strong><br>${place[1]}</li>`
- ).join("");
+    const destination=destinations[id];
+    const image=images[0]||placeholder(destination.name);
+    const places=destination.places.map(place=>
+        `<li><strong>${place[0]}</strong><br>${place[1]}</li>`
+    ).join("");
 
- return `
-  <article class="compare-card">
-   <img src="${image}" alt="${destination.name}" loading="lazy">
-   <div class="compare-card-content">
-    <div class="compare-region">${destination.region}</div>
-    <h3>${destination.name}</h3>
-    <span class="compare-experience">${destination.experience}</span>
-    <p class="compare-description">${destination.description}</p>
-    <h4>📍 Lieux à découvrir (${destination.places.length})</h4>
-    <ul class="compare-places">${places}</ul>
-   </div>
-  </article>`;
+    return `
+        <article class="compare-card">
+            <img src="${image}" alt="${destination.name}" loading="lazy">
+            <div class="compare-card-content">
+                <div class="compare-region">${destination.region}</div>
+                <h3>${destination.name}</h3>
+                <span class="compare-experience">${destination.experience}</span>
+                <p class="compare-description">${destination.description}</p>
+                <h4>📍 Lieux à découvrir (${destination.places.length})</h4>
+                <ul class="compare-places">${places}</ul>
+            </div>
+        </article>`;
 }
 
 async function renderComparison(){
- const firstId=compareFirst.value;
- const secondId=compareSecond.value;
- const message=document.getElementById("compareMessage");
- const results=document.getElementById("compareResults");
- const summary=document.getElementById("compareSummary");
+    const firstId=compareFirst.value;
+    const secondId=compareSecond.value;
+    const message=document.getElementById("compareMessage");
+    const results=document.getElementById("compareResults");
+    const summary=document.getElementById("compareSummary");
 
- results.innerHTML="";
- summary.innerHTML="";
+    results.innerHTML="";
+    summary.innerHTML="";
 
- if(!firstId||!secondId){
-  message.textContent="Veuillez choisir deux destinations.";
-  return;
- }
+    if(!firstId||!secondId){
+        message.textContent="Veuillez choisir deux destinations.";
+        return;
+    }
+    if(firstId===secondId){
+        message.textContent="Choisissez deux destinations différentes pour les comparer.";
+        return;
+    }
 
- if(firstId===secondId){
-  message.textContent="Choisissez deux destinations différentes pour les comparer.";
-  return;
- }
+    const requestId=++comparisonRequest;
+    message.textContent="📸 Chargement des photos et préparation de la comparaison...";
+    results.innerHTML='<div class="compare-loading">Chargement...</div>';
 
- const requestId=++comparisonRequest;
- message.textContent="📸 Chargement des photos et préparation de la comparaison...";
- results.innerHTML='<div class="compare-loading">Chargement...</div>';
+    const first=destinations[firstId];
+    const second=destinations[secondId];
 
- const first=destinations[firstId];
- const second=destinations[secondId];
+    const [firstImages,secondImages]=await Promise.all([
+        getImages(first.search),
+        getImages(second.search)
+    ]);
 
- const [firstImages,secondImages]=await Promise.all([
-  getImages(first.search),
-  getImages(second.search)
- ]);
+    if(requestId!==comparisonRequest)return;
 
- if(requestId!==comparisonRequest)return;
+    message.textContent="Voici votre comparaison :";
+    results.innerHTML=
+        buildCompareCard(firstId,firstImages)+
+        buildCompareCard(secondId,secondImages);
 
- message.textContent="Voici votre comparaison :";
- results.innerHTML=buildCompareCard(firstId,firstImages)+buildCompareCard(secondId,secondImages);
-
- summary.innerHTML=`
-  <div class="compare-summary">
-   <strong>🔎 En résumé</strong>
-   <p><strong>${first.name}</strong> : ${first.experience}. Région : ${first.region}.</p>
-   <p><strong>${second.name}</strong> : ${second.experience}. Région : ${second.region}.</p>
-   <p>Les deux destinations proposent chacune ${first.places.length} lieux présentés dans ce guide. Comparez les descriptions et les lieux ci-dessus pour choisir celle qui correspond le mieux à vos envies.</p>
-  </div>`;
+    summary.innerHTML=`
+        <div class="compare-summary">
+            <strong>🔎 En résumé</strong>
+            <p><strong>${first.name}</strong> : ${first.experience}. Région : ${first.region}.</p>
+            <p><strong>${second.name}</strong> : ${second.experience}. Région : ${second.region}.</p>
+            <p>Les deux destinations proposent chacune ${first.places.length} lieux présentés dans ce guide. Comparez les descriptions et les lieux ci-dessus pour choisir celle qui correspond le mieux à vos envies.</p>
+        </div>`;
 }
 
 function swapComparison(){
- const firstValue=compareFirst.value;
- compareFirst.value=compareSecond.value;
- compareSecond.value=firstValue;
- renderComparison();
+    const firstValue=compareFirst.value;
+    compareFirst.value=compareSecond.value;
+    compareSecond.value=firstValue;
+    renderComparison();
 }
 
 function resetComparison(){
- compareFirst.value="alger";
- compareSecond.value="bejaia";
- renderComparison();
+    compareFirst.value="alger";
+    compareSecond.value="bejaia";
+    renderComparison();
 }
 
-/* OPEN DESTINATION */
-async function openDestination(id){
- const destination=destinations[id];
- document.getElementById("homePage").style.display="none";
- document.getElementById("destinationDetail").style.display="block";
-
- document.getElementById("detailRegion").textContent=destination.region;
- document.getElementById("detailTitle").textContent=destination.name;
- document.getElementById("detailDescription").textContent=destination.description;
- document.getElementById("detailRegionBox").textContent=destination.region;
- document.getElementById("detailExperience").textContent=destination.experience;
- document.getElementById("detailPlacesCount").textContent=destination.places.length+" lieux";
-
- const hero=document.getElementById("detailHeroImage");
- const gallery=document.getElementById("detailGallery");
- gallery.innerHTML='<div class="loading">📸 Recherche des photos...</div>';
- hero.src=placeholder(destination.name);
- hero.alt=destination.name;
- window.scrollTo({top:0,behavior:"smooth"});
-
- const images=await getImages(destination.search);
- if(images.length>0)hero.src=images[0];
-
- gallery.innerHTML="";
- if(images.length===0){
-  gallery.innerHTML='<div class="loading">Impossible de charger les photos.</div>';
- }else{
-  images.forEach((image,index)=>{
-   const img=document.createElement("img");
-   img.src=image;
-   img.alt=destination.name+" photo "+(index+1);
-   img.loading="lazy";
-   img.onclick=()=>openLightbox(image);
-   gallery.appendChild(img);
-  });
- }
-
- const places=document.getElementById("detailPlaces");
- places.innerHTML="";
- destination.places.forEach((place,index)=>{
-  const div=document.createElement("div");
-  div.className="place";
-  div.innerHTML=`
-   <div class="place-number">${index+1}</div>
-   <h3>${place[0]}</h3>
-   <p>${place[1]}</p>`;
-  places.appendChild(div);
- });
+/* =====================================================
+   FIX 3 : NAVIGATION PAR HASH (bouton Retour du navigateur)
+===================================================== */
+function openDestination(id){
+    location.hash="#/"+id; // route() s'occupe du reste
 }
 
-/* BACK */
 function goBack(){
- document.getElementById("destinationDetail").style.display="none";
- document.getElementById("homePage").style.display="block";
- document.getElementById("destinations").scrollIntoView({behavior:"smooth"});
+    location.hash="#destinations";
 }
+
+function showHome(){
+    document.getElementById("destinationDetail").style.display="none";
+    document.getElementById("homePage").style.display="block";
+    map.invalidateSize(); // la carte se déforme si elle était masquée
+}
+
+let detailRequest=0;
+
+async function showDestination(id){
+    const destination=destinations[id];
+    const requestId=++detailRequest;
+
+    document.getElementById("homePage").style.display="none";
+    document.getElementById("destinationDetail").style.display="block";
+    document.getElementById("detailRegion").textContent=destination.region;
+    document.getElementById("detailTitle").textContent=destination.name;
+    document.getElementById("detailDescription").textContent=destination.description;
+    document.getElementById("detailRegionBox").textContent=destination.region;
+    document.getElementById("detailExperience").textContent=destination.experience;
+    document.getElementById("detailPlacesCount").textContent=destination.places.length+" lieux";
+
+    const hero=document.getElementById("detailHeroImage");
+    const gallery=document.getElementById("detailGallery");
+    gallery.innerHTML='<div class="loading">📸 Recherche des photos...</div>';
+    hero.dataset.failed="";
+    hero.alt=destination.name;
+    hero.src=placeholder(destination.name);
+    window.scrollTo({top:0,behavior:"smooth"});
+
+    const places=document.getElementById("detailPlaces");
+    places.innerHTML="";
+    destination.places.forEach((place,index)=>{
+        const div=document.createElement("div");
+        div.className="place";
+        div.innerHTML=`
+            <div class="place-number">${index+1}</div>
+            <h3>${place[0]}</h3>
+            <p>${place[1]}</p>`;
+        places.appendChild(div);
+    });
+
+    const images=await getImages(destination.search);
+    if(requestId!==detailRequest)return; // l'utilisateur a changé de page entre-temps
+
+    if(images.length>0)hero.src=images[0];
+
+    gallery.innerHTML="";
+    if(images.length===0){
+        gallery.innerHTML='<div class="loading">Impossible de charger les photos.</div>';
+    }else{
+        images.forEach((image,index)=>{
+            const img=document.createElement("img");
+            img.src=image;
+            img.alt=destination.name+" photo "+(index+1);
+            img.loading="lazy";
+            img.onclick=()=>openLightbox(image);
+            gallery.appendChild(img);
+        });
+    }
+}
+
+function route(){
+    const hash=location.hash;
+    if(hash.startsWith("#/")){
+        const id=hash.slice(2);
+        if(destinations[id]){showDestination(id);return;}
+        showHome();
+        return;
+    }
+    showHome();
+    if(hash.length>1){
+        try{
+            const target=document.querySelector(hash);
+            if(target)target.scrollIntoView({behavior:"smooth"});
+        }catch(error){}
+    }
+}
+
+window.addEventListener("hashchange",route);
 
 /* LIGHTBOX */
 function openLightbox(src){
- document.getElementById("lightbox").style.display="flex";
- document.getElementById("lightboxImage").src=src;
+    document.getElementById("lightbox").style.display="flex";
+    document.getElementById("lightboxImage").src=src;
 }
 
 function closeLightbox(){
- document.getElementById("lightbox").style.display="none";
+    document.getElementById("lightbox").style.display="none";
 }
 
 document.getElementById("lightbox").addEventListener("click",function(event){
- if(event.target===this)closeLightbox();
+    if(event.target===this)closeLightbox();
 });
 
 document.addEventListener("keydown",function(event){
- if(event.key==="Escape")closeLightbox();
+    if(event.key==="Escape")closeLightbox();
 });
 
-/* START */
+/* =====================================================
+   FIX 2 : MENU MOBILE ☰
+===================================================== */
+const navToggle=document.getElementById("navToggle");
+const navLinks=document.getElementById("navLinks");
+
+navToggle.addEventListener("click",()=>{
+    const open=navLinks.classList.toggle("open");
+    navToggle.setAttribute("aria-expanded",open);
+    navToggle.textContent=open?"✕":"☰";
+});
+
+navLinks.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{
+    navLinks.classList.remove("open");
+    navToggle.textContent="☰";
+    navToggle.setAttribute("aria-expanded","false");
+}));
+
+/* =====================================================
+   DÉMARRAGE
+===================================================== */
 populateComparisonSelectors();
 displayDestinations("all");
 renderComparison();
+route();
+</script>
+
+<script>
+/* ÉCRAN DE BIENVENUE */
+(() => {
+    const welcome = document.getElementById("welcomeScreen");
+    if (!welcome) return;
+
+    window.setTimeout(() => {
+        welcome.classList.add("is-leaving");
+        window.setTimeout(() => welcome.remove(), 850);
+    }, 2400);
+})();
+
+/* FIX 5 : VIDÉO UNIQUEMENT SUR GRAND ÉCRAN */
+(() => {
+    const box = document.querySelector(".hero-video");
+    const isDesktop = window.matchMedia("(min-width:801px)").matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion:reduce)").matches;
+    const saveData = navigator.connection && navigator.connection.saveData;
+    if (!box || !isDesktop || reduceMotion || saveData) return; // mobile : image Casbah seulement
+
+    const iframe = document.createElement("iframe");
+    iframe.src = "https://www.youtube-nocookie.com/embed/cU6rQF4mNEA?autoplay=1&mute=1&controls=0&loop=1&playlist=cU6rQF4mNEA&playsinline=1&rel=0&modestbranding=1";
+    iframe.title = "Découvrir l’Algérie en vidéo";
+    iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.tabIndex = -1;
+    box.appendChild(iframe);
+})();
 </script>
 </body>
 </html>
